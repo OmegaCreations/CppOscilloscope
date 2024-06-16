@@ -5,7 +5,7 @@
 CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
     : MainFrame(parent), _config{OperatingModeRadioBox->GetSelection(), DrawStyleRadioBox->GetSelection(), ShowGridCheckbox->IsChecked()} {
   DrawPanel->SetBackgroundStyle(wxBG_STYLE_PAINT);
-};
+}
 
 void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
   wxAutoBufferedPaintDC dc(DrawPanel);
