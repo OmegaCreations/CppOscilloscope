@@ -1082,6 +1082,15 @@
           </object>
         </object>
       </object>
+      <object class="wxTimer" expanded="true">
+        <property name="enabled">0</property>
+        <property name="id">wxID_ANY</property>
+        <property name="name">RefreshTimer</property>
+        <property name="oneshot">0</property>
+        <property name="period">1000</property>
+        <property name="permission">protected</property>
+        <event name="OnTimer">RefreshTimerOnTimer</event>
+      </object>
     </object>
   </object>
 </wxFormBuilder_Project>
