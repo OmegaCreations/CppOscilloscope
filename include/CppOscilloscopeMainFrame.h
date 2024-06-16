@@ -34,6 +34,9 @@ class CppOscilloscopeMainFrame : public MainFrame
 	private:
 		Config _config;
 		Data _currentData, _previousData, _historicData;
+
+		void loadData(const std::string& filepath);
+		void updateStats();
 };
 
 #endif // __CppOscilloscopeMainFrame__
