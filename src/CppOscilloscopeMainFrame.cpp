@@ -70,7 +70,6 @@ void CppOscilloscopeMainFrame::BitmapSaveButtonOnButtonClick(wxCommandEvent& eve
 
 void CppOscilloscopeMainFrame::RefreshTimerOnTimer(wxTimerEvent& event) {
   loadData(_config->getFilepath());
-  std::cout << "dupa\n";
 }
 
 void CppOscilloscopeMainFrame::loadData(const std::string& filepath) {
