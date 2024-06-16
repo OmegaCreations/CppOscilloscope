@@ -1,8 +1,11 @@
 #include "CppOscilloscopeMainFrame.h"
-#include "wx/dcbuffer.h"
+#include <wx/dcbuffer.h>
+#include <wx/filedlg.h>
 
 CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
-    : MainFrame(parent), _config{OperatingModeRadioBox->GetSelection(), DrawStyleRadioBox->GetSelection(), ShowGridCheckbox->IsChecked()} {};
+    : MainFrame(parent), _config{OperatingModeRadioBox->GetSelection(), DrawStyleRadioBox->GetSelection(), ShowGridCheckbox->IsChecked()} {
+  DrawPanel->SetBackgroundStyle(wxBG_STYLE_PAINT);
+};
 
 void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
   wxAutoBufferedPaintDC dc(DrawPanel);
@@ -13,7 +16,15 @@ void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {
 }
 
 void CppOscilloscopeMainFrame::LoadFileButtonOnButtonClick(wxCommandEvent& event) {
-  // TODO: Implement LoadFileButtonOnButtonClick
+  wxFileDialog openDataDialog(this, "Open the data file", "", "dane.dat", "DAT files (*.dat)|*.dat", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+  if (openDataDialog.ShowModal() == wxID_CANCEL) {
+    return;
+  }
+    
+  _config.setFilepath(openDataDialog.GetPath().ToStdString());
+
+  RefreshTimer.Start(1000);
 }
 
 void CppOscilloscopeMainFrame::OperatingModeRadioBoxOnRadioBox(wxCommandEvent& event) {
