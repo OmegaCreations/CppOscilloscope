@@ -128,6 +128,8 @@
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
                 <property name="window_style">wxTAB_TRAVERSAL</property>
+                <event name="OnPaint">DrawPanelOnPaint</event>
+                <event name="OnUpdateUI">DrawPanelOnUpdateUI</event>
               </object>
             </object>
           </object>
@@ -284,6 +286,7 @@
                     <property name="window_extra_style"></property>
                     <property name="window_name"></property>
                     <property name="window_style"></property>
+                    <event name="OnButtonClick">LoadFileButtonOnButtonClick</event>
                   </object>
                 </object>
               </object>
@@ -362,6 +365,7 @@
                     <property name="window_extra_style"></property>
                     <property name="window_name"></property>
                     <property name="window_style"></property>
+                    <event name="OnRadioBox">OperatingModeRadioBoxOnRadioBox</event>
                   </object>
                 </object>
               </object>
@@ -440,6 +444,7 @@
                     <property name="window_extra_style"></property>
                     <property name="window_name"></property>
                     <property name="window_style"></property>
+                    <event name="OnRadioBox">DrawStyleRadioBoxOnRadioBox</event>
                   </object>
                 </object>
               </object>
@@ -578,6 +583,7 @@
                     <property name="window_extra_style"></property>
                     <property name="window_name"></property>
                     <property name="window_style"></property>
+                    <event name="OnCheckBox">ShowGridCheckboxOnCheckBox</event>
                   </object>
                 </object>
               </object>
@@ -1068,6 +1074,7 @@
                     <property name="window_extra_style"></property>
                     <property name="window_name"></property>
                     <property name="window_style"></property>
+                    <event name="OnButtonClick">BitmapSaveButtonOnButtonClick</event>
                   </object>
                 </object>
               </object>
