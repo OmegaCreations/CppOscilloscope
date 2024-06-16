@@ -3,6 +3,9 @@
 Config::Config(OperatingMode operatingMode, DrawStyle drawStyle, bool showGrid, const std::string& filepath)
     : _operatingMode(operatingMode), _drawStyle(drawStyle), _showGrid(showGrid), _filepath(filepath) {}
 
+Config::Config(int operatingMode, int drawStyle, bool showGrid, const std::string& filepath)
+    : Config(static_cast<OperatingMode>(operatingMode), static_cast<DrawStyle>(drawStyle), showGrid, filepath) {}
+
 OperatingMode Config::getOperatingMode() const {
   return _operatingMode;
 }

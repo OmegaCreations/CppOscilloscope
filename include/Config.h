@@ -24,6 +24,8 @@ class Config {
          bool showGrid = false,
          const std::string& filepath = "");
 
+  Config(int operatingMode = 0, int drawStyle = 0, bool showGrid = false, const std::string& filepath = "");
+
   OperatingMode getOperatingMode() const;
   void setOperatingMode(OperatingMode operatingMode);
 
