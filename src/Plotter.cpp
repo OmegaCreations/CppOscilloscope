@@ -71,7 +71,10 @@ void Plotter::draw(wxDC& dc, const Data& currentData, const Data& previousData, 
   switch (_config->getOperatingMode())
   {
   case OperatingMode::CURRENT_AND_PREVIOUS:
-    dc.SetPen(wxPen(wxColour(0, 0, 0), 2));
+    if (previousData.getDataPoints().empty()) {
+      break;
+    }
+    dc.SetPen(wxPen(wxColour(66, 135, 245), 2));
     std::for_each(previousData.getDataPoints().begin(), previousData.getDataPoints().end() - 1, [&](const std::pair<double, double>& p) {
       line2d(dc, transformation, p, *std::next(&p)); // p is just a dereferenced iterator, so we can take its addres again, and then increment it and dereference it again :)
     });
