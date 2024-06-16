@@ -1,14 +1,15 @@
 #include "CppOscilloscopeMainFrame.h"
+#include "wx/dcbuffer.h"
 
 CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
     : MainFrame(parent), _config{OperatingModeRadioBox->GetSelection(), DrawStyleRadioBox->GetSelection(), ShowGridCheckbox->IsChecked()} {};
 
 void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
-  // TODO: Implement DrawPanelOnPaint
+  wxAutoBufferedPaintDC dc(DrawPanel);
 }
 
 void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {
-  // TODO: Implement DrawPanelOnUpdateUI
+  DrawPanel->Refresh();
 }
 
 void CppOscilloscopeMainFrame::LoadFileButtonOnButtonClick(wxCommandEvent& event) {
