@@ -2,6 +2,9 @@
 #include <wx/dcbuffer.h>
 #include <wx/filedlg.h>
 #include "DataLoader.h"
+#include "Plotter.h"
+
+#include <iostream>
 
 CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
     : MainFrame(parent),
@@ -10,7 +13,20 @@ CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
 }
 
 void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
-  wxAutoBufferedPaintDC dc(DrawPanel);
+  wxAutoBufferedPaintDC dc{DrawPanel};
+
+  // no-op if we haven't loaded the data yet
+  if (_currentData.getDataPoints().empty()) {
+    return;
+  }
+
+  wxBitmap bitmap{DrawPanel->GetSize()};
+  wxMemoryDC memDC{bitmap};
+
+  Plotter plotter{_config};
+  plotter.draw(memDC, _currentData, _previousData, _historicData);
+
+  dc.DrawBitmap(bitmap, {0, 0});
 }
 
 void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {
@@ -18,7 +34,7 @@ void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {
 }
 
 void CppOscilloscopeMainFrame::LoadFileButtonOnButtonClick(wxCommandEvent& event) {
-  wxFileDialog openDataDialog(this, "Open the data file", "", "dane.dat", "DAT files (*.dat)|*.dat", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+  wxFileDialog openDataDialog{this, "Open the data file", "", "dane.dat", "DAT files (*.dat)|*.dat", wxFD_OPEN | wxFD_FILE_MUST_EXIST};
 
   if (openDataDialog.ShowModal() == wxID_CANCEL) {
     return;
@@ -27,7 +43,7 @@ void CppOscilloscopeMainFrame::LoadFileButtonOnButtonClick(wxCommandEvent& event
   _config->setFilepath(openDataDialog.GetPath().ToStdString());
   loadData(_config->getFilepath());
 
-  RefreshTimer.Start(1000);
+  RefreshTimer.Start(100);
 }
 
 void CppOscilloscopeMainFrame::OperatingModeRadioBoxOnRadioBox(wxCommandEvent& event) {
@@ -54,6 +70,7 @@ void CppOscilloscopeMainFrame::BitmapSaveButtonOnButtonClick(wxCommandEvent& eve
 
 void CppOscilloscopeMainFrame::RefreshTimerOnTimer(wxTimerEvent& event) {
   loadData(_config->getFilepath());
+  std::cout << "dupa\n";
 }
 
 void CppOscilloscopeMainFrame::loadData(const std::string& filepath) {
