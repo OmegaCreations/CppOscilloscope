@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BUFFER_H
+#define BUFFER_H
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -17,7 +18,7 @@ public:
     static ChartMap _chartData; // zainicjalizowana mapa wykresow
     
     
-    // funkcja zczytuj¹ca punkty z pliku
+    // funkcja zczytujï¿½ca punkty z pliku
     static bool readDataFromFile(const std::string& filename, const std::string& chartName) {
         
         std::ifstream file(filename);
@@ -37,14 +38,14 @@ public:
 
         file.close();
 
-        // nazwa wykresu mo¿e byæ ustalana odgórnie b¹dŸ statycznie liczona
+        // nazwa wykresu moï¿½e byï¿½ ustalana odgï¿½rnie bï¿½dï¿½ statycznie liczona
         Buffer::_chartData[chartName] = dataMap;
         
         
         return true;
     }
 
-    // zwrócenie wartoœci x_start, x_stop, y_min, y_max dla ChartClass.cpp
+    // zwrï¿½cenie wartoï¿½ci x_start, x_stop, y_min, y_max dla ChartClass.cpp
     static std::tuple<double, double, double, double> getChartLimits(const std::string& chartName) {
         
         auto it = Buffer::_chartData.find(chartName);
@@ -73,3 +74,6 @@ public:
         return { x_start, x_stop, y_min, y_max };
     }
 };
+
+
+#endif /* BUFFER_H */
