@@ -92,9 +92,9 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	yMinText->Wrap( -1 );
 	MinSizer->Add( yMinText, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	m_staticText8 = new wxStaticText( this, wxID_ANY, wxT("y_min"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText8->Wrap( -1 );
-	MinSizer->Add( m_staticText8, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	yMinValue = new wxStaticText( this, wxID_ANY, wxT("y_min"), wxDefaultPosition, wxDefaultSize, 0 );
+	yMinValue->Wrap( -1 );
+	MinSizer->Add( yMinValue, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
 	StatsSizer->Add( MinSizer, 0, wxEXPAND, 5 );
@@ -106,9 +106,9 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	yMaxText->Wrap( -1 );
 	MaxSizer->Add( yMaxText, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	m_staticText9 = new wxStaticText( this, wxID_ANY, wxT("y_max"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText9->Wrap( -1 );
-	MaxSizer->Add( m_staticText9, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	yMaxValue = new wxStaticText( this, wxID_ANY, wxT("y_max"), wxDefaultPosition, wxDefaultSize, 0 );
+	yMaxValue->Wrap( -1 );
+	MaxSizer->Add( yMaxValue, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
 	StatsSizer->Add( MaxSizer, 0, wxEXPAND, 5 );

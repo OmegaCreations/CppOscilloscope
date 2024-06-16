@@ -5,9 +5,7 @@
 // PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef CPPOSCILLOSCOPE_H
-#define CPPOSCILLOSCOPE_H
-
+#pragma once
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
@@ -48,9 +46,9 @@ class MainFrame : public wxFrame
 		wxCheckBox* ShowGridCheckbox;
 		wxStaticText* StatsText;
 		wxStaticText* yMinText;
-		wxStaticText* m_staticText8;
+		wxStaticText* yMinValue;
 		wxStaticText* yMaxText;
-		wxStaticText* m_staticText9;
+		wxStaticText* yMaxValue;
 		wxStaticText* BitmapSaveText;
 		wxButton* BitmapSaveButton;
 		wxTimer RefreshTimer;
@@ -74,6 +72,3 @@ class MainFrame : public wxFrame
 
 };
 
-
-
-#endif /* CPPOSCILLOSCOPE_H */
