@@ -4,7 +4,8 @@
 #include "DataLoader.h"
 
 CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
-    : MainFrame(parent), _config{OperatingModeRadioBox->GetSelection(), DrawStyleRadioBox->GetSelection(), ShowGridCheckbox->IsChecked()} {
+    : MainFrame(parent),
+      _config{std::make_shared<Config>(OperatingModeRadioBox->GetSelection(), DrawStyleRadioBox->GetSelection(), ShowGridCheckbox->IsChecked())} {
   DrawPanel->SetBackgroundStyle(wxBG_STYLE_PAINT);
 }
 
@@ -23,27 +24,27 @@ void CppOscilloscopeMainFrame::LoadFileButtonOnButtonClick(wxCommandEvent& event
     return;
   }
 
-  _config.setFilepath(openDataDialog.GetPath().ToStdString());
-  loadData(_config.getFilepath());
-  
+  _config->setFilepath(openDataDialog.GetPath().ToStdString());
+  loadData(_config->getFilepath());
+
   RefreshTimer.Start(1000);
 }
 
 void CppOscilloscopeMainFrame::OperatingModeRadioBoxOnRadioBox(wxCommandEvent& event) {
   OperatingMode mode = static_cast<OperatingMode>(OperatingModeRadioBox->GetSelection());
-  _config.setOperatingMode(mode);
+  _config->setOperatingMode(mode);
   DrawPanel->Refresh();
   updateStats();
 }
 
 void CppOscilloscopeMainFrame::DrawStyleRadioBoxOnRadioBox(wxCommandEvent& event) {
   DrawStyle style = static_cast<DrawStyle>(DrawStyleRadioBox->GetSelection());
-  _config.setDrawStyle(style);
+  _config->setDrawStyle(style);
   DrawPanel->Refresh();
 }
 
 void CppOscilloscopeMainFrame::ShowGridCheckboxOnCheckBox(wxCommandEvent& event) {
-  _config.setShowGrid(ShowGridCheckbox->IsChecked());
+  _config->setShowGrid(ShowGridCheckbox->IsChecked());
   DrawPanel->Refresh();
 }
 
@@ -52,16 +53,16 @@ void CppOscilloscopeMainFrame::BitmapSaveButtonOnButtonClick(wxCommandEvent& eve
 }
 
 void CppOscilloscopeMainFrame::RefreshTimerOnTimer(wxTimerEvent& event) {
-  loadData(_config.getFilepath());
+  loadData(_config->getFilepath());
 }
 
 void CppOscilloscopeMainFrame::loadData(const std::string& filepath) {
-  DataLoader::loadDataFromFile(_config.getFilepath(), _currentData, _previousData, _historicData);
+  DataLoader::loadDataFromFile(_config->getFilepath(), _currentData, _previousData, _historicData);
   updateStats();
 }
 
 void CppOscilloscopeMainFrame::updateStats() {
-  switch (_config.getOperatingMode()) {
+  switch (_config->getOperatingMode()) {
     case OperatingMode::CURRENT:
       yMinValue->SetLabel(std::to_string(_currentData.getYMin()));
       yMaxValue->SetLabel(std::to_string(_currentData.getYMax()));
