@@ -1,4 +1,5 @@
 #include "Plotter.h"
+#include <iostream>
 
 Plotter::Plotter(std::shared_ptr<Config> config)
     : _config{std::move(config)} {}
@@ -64,10 +65,10 @@ void Plotter::draw(wxDC& dc, const Data& currentData, const Data& previousData, 
   // basically invert the blank space on the top with the one at the bottom
 
   // axis department
-  // dc.SetPen(wxPen(wxColour(245, 66, 66), 2));
-  // line2d(dc, transformation, {})
-
-  int move_x = 0;     // zmienna kt�ra przesuwa argumenty w ty� dla historii
+  if (_config->getShowGrid()) {
+    dc.SetPen(wxPen(wxColour(255, 0, 0), 2));
+    drawAxes(dc, transformation, x0, x1, y0, y1);
+  }
 
   switch (_config->getOperatingMode()) {
     case OperatingMode::CURRENT_AND_PREVIOUS:
@@ -112,4 +113,51 @@ void Plotter::line2d(wxDC& dc, const Matrix& transformation, std::pair<double, d
   end = transformation * end;
 
   dc.DrawLine(start.GetX(), start.GetY(), end.GetX(), end.GetY());
+}
+
+void Plotter::text2d(wxDC& dc, const Matrix& transformation, double x, double y, double alpha, double value) {
+  Vector point{x, y};
+
+  point = transformation * point;
+
+  dc.DrawRotatedText(wxString::Format("%.2lf", value), point.GetX(), point.GetY(), alpha);
+}
+
+void Plotter::text2d(wxDC& dc, const Matrix& transformation, std::pair<double, double> point, double alpha, double value) {
+  Vector _point{point.first, point.second};
+
+  _point = transformation * _point;
+
+  dc.DrawRotatedText(wxString::Format("%.2lf", value), _point.GetX(), _point.GetY(), alpha);
+}
+
+void Plotter::drawAxes(wxDC& dc, const Matrix& transformation, double x0, double x1, double y0, double y1, double step) {
+  double width{x1 - x0};
+  double height{y1 - y0};
+
+  std::pair<double, double> startX{x0, y0};
+  std::pair<double, double> stopX{x1, y0};
+  std::pair<double, double> startY{x0, y0};
+  std::pair<double, double> stopY{x0, y1};
+
+  std::vector<std::pair<double, double>> xTics{};
+  std::vector<std::pair<double, double>> yTics{};
+
+  for (double dx = step; dx < 1; dx += step) {
+    xTics.emplace_back(width * dx, y0);
+    xTics.emplace_back(width * dx, y0 + 0.05 * height);
+
+    yTics.emplace_back(x0, y0 + dx * height);
+    yTics.emplace_back(width * 0.05, y0 + dx * height);
+  }
+
+  for (size_t i = 0; i < xTics.size(); i+=2) {
+    line2d(dc, transformation, xTics[i], xTics[i+1]);
+    text2d(dc, transformation, xTics[i+1].first - width * 0.01, xTics[i+1].second + height * 0.04, 0.0, xTics[i].first);
+    line2d(dc, transformation, yTics[i], yTics[i+1]);
+    text2d(dc, transformation, yTics[i+1].first + width * 0.01, yTics[i+1].second + height * 0.02, 0.0, yTics[i].second);
+  }
+
+  double dupa = xTics[1].first;
+
 }

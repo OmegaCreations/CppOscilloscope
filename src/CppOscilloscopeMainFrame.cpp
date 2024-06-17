@@ -19,8 +19,8 @@ void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
     return;
   }
 
-  // wxBitmap bitmap{DrawPanel->GetSize()};
-  // wxMemoryDC memDC{bitmap};
+  wxBitmap bitmap{DrawPanel->GetSize()};
+  wxMemoryDC memDC{bitmap};
 
   Plotter plotter{_config};
   plotter.draw(dc, _currentData, _previousData, _historicData);
