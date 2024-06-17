@@ -23,9 +23,10 @@ void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
   wxMemoryDC memDC{bitmap};
 
   Plotter plotter{_config};
-  plotter.draw(dc, _currentData, _previousData, _historicData);
+  plotter.draw(memDC, _currentData, _previousData, _historicData);
 
-  // dc.DrawBitmap(bitmap, {0, 0});
+  memDC.SelectObject(wxNullBitmap);
+  dc.DrawBitmap(bitmap, {0, 0});
 }
 
 void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {
