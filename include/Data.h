@@ -6,10 +6,10 @@
 
 class Data {
  private:
-  std::vector<std::pair<double, double>> data_points; // zbi�r wsp�rz�dnych za�adowanych punkt�w
-  double x_min, x_max, y_min, y_max; // warto�ci minimalne i maksymalne danych
+  std::vector<std::pair<double, double>> data_points;  // zbi�r wsp�rz�dnych za�adowanych punkt�w
+  double x_min, x_max, y_min, y_max;                   // warto�ci minimalne i maksymalne danych
 
-  void updateMinMax(double x, double y); // aktualizuje maksima i minima globalne dla przedzia�u czasowego
+  void updateMinMax(double x, double y);  // aktualizuje maksima i minima globalne dla przedzia�u czasowego
 
  public:
   // konstruktor

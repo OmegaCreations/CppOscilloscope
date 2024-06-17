@@ -10,7 +10,6 @@ Data::Data()
       y_max(std::numeric_limits<double>::min()),
       data_points{} {}
 
-
 // dodawanie nowego punktu do danych
 void Data::addDataPoint(double x, double y) {
   data_points.emplace_back(x, y);

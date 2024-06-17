@@ -14,7 +14,7 @@ class Vector {
   double GetX() const;
   double GetY() const;
 
-  friend class Matrix; // need to friend the matrix class, as we overload operator* for matrix * vector operation
+  friend class Matrix;  // need to friend the matrix class, as we overload operator* for matrix * vector operation
 };
 
 class Matrix {

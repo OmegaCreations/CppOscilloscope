@@ -2,7 +2,6 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-
 Vector::Vector(double x, double y)
     : _data{x, y, 1.0} {}
 
@@ -27,13 +26,13 @@ Matrix::Matrix()
 
 Matrix Matrix::operator*(const Matrix& other) const {
   Matrix result;
-  
+
   for (int i = 0; i < 3; ++i) {
     for (int j = 0; j < 3; ++j) {
-      result._data[i][j] = 0.0; // zero out cause we initialize the matrix to be
-                                // 1 0 0
-                                // 0 1 0
-                                // 0 0 1
+      result._data[i][j] = 0.0;  // zero out cause we initialize the matrix to be
+                                 // 1 0 0
+                                 // 0 1 0
+                                 // 0 0 1
 
       for (int k = 0; k < 3; ++k) {
         result._data[i][j] += _data[i][k] * other._data[k][j];
@@ -48,9 +47,9 @@ Vector Matrix::operator*(const Vector& vector) const {
   Vector result;
 
   for (int i = 0; i < 3; ++i) {
-    result._data[i] = 0.0; // zero out cause the vector gets default initialized to
-                           // 0 0 1
-                           // here is why we need the friend
+    result._data[i] = 0.0;  // zero out cause the vector gets default initialized to
+                            // 0 0 1
+                            // here is why we need the friend
 
     for (int k = 0; k < 3; ++k) {
       result._data[i] += _data[i][k] * vector._data[k];
@@ -104,6 +103,6 @@ Matrix Matrix::XFlip() {
 
   xflipping._data[0][0] = 1;
   xflipping._data[1][1] = -1;
-  
+
   return xflipping;
 }

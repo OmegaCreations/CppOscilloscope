@@ -151,13 +151,12 @@ void Plotter::drawAxes(wxDC& dc, const Matrix& transformation, double x0, double
     yTics.emplace_back(width * 0.05, y0 + dx * height);
   }
 
-  for (size_t i = 0; i < xTics.size(); i+=2) {
-    line2d(dc, transformation, xTics[i], xTics[i+1]);
-    text2d(dc, transformation, xTics[i+1].first - width * 0.01, xTics[i+1].second + height * 0.04, 0.0, xTics[i].first);
-    line2d(dc, transformation, yTics[i], yTics[i+1]);
-    text2d(dc, transformation, yTics[i+1].first + width * 0.01, yTics[i+1].second + height * 0.02, 0.0, yTics[i].second);
+  for (size_t i = 0; i < xTics.size(); i += 2) {
+    line2d(dc, transformation, xTics[i], xTics[i + 1]);
+    text2d(dc, transformation, xTics[i + 1].first - width * 0.01, xTics[i + 1].second + height * 0.04, 0.0, xTics[i].first);
+    line2d(dc, transformation, yTics[i], yTics[i + 1]);
+    text2d(dc, transformation, yTics[i + 1].first + width * 0.01, yTics[i + 1].second + height * 0.02, 0.0, yTics[i].second);
   }
 
   double dupa = xTics[1].first;
-
 }

@@ -1,8 +1,8 @@
 #ifndef DATALOADER_H
 #define DATALOADER_H
 
-#include "Data.h"
 #include <string>
+#include "Data.h"
 
 class DataLoader {
  public:
