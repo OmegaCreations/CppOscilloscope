@@ -33,7 +33,7 @@ void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {
 }
 
 void CppOscilloscopeMainFrame::LoadFileButtonOnButtonClick(wxCommandEvent& event) {
-  wxFileDialog openDataDialog{this, "Open the data file", "", "dane.dat", "DAT files (*.dat)|*.dat", wxFD_OPEN | wxFD_FILE_MUST_EXIST};
+  wxFileDialog openDataDialog{this, "Open the data file", "", "dane.txt", "TXT files (*.txt)|*.txt", wxFD_OPEN | wxFD_FILE_MUST_EXIST};
 
   if (openDataDialog.ShowModal() == wxID_CANCEL) {
     return;
