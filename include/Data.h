@@ -6,10 +6,10 @@
 
 class Data {
  private:
-  std::vector<std::pair<double, double>> data_points; // zbiór wspó³rzêdnych za³adowanych punktów
-  double x_min, x_max, y_min, y_max; // wartoœci minimalne i maksymalne danych
+  std::vector<std::pair<double, double>> data_points; // zbiï¿½r wspï¿½rzï¿½dnych zaï¿½adowanych punktï¿½w
+  double x_min, x_max, y_min, y_max; // wartoï¿½ci minimalne i maksymalne danych
 
-  void updateMinMax(double x, double y); // aktualizuje maksima i minima globalne dla przedzia³u czasowego
+  void updateMinMax(double x, double y); // aktualizuje maksima i minima globalne dla przedziaï¿½u czasowego
 
  public:
   // konstruktor
@@ -18,10 +18,10 @@ class Data {
   // dodaje punkt
   void addDataPoint(double x, double y);
 
-  // zwraca wszystkie za³adowane punkty
+  // zwraca wszystkie zaï¿½adowane punkty
   const std::vector<std::pair<double, double>>& getDataPoints() const;
 
-  // gettery maksimów i minimów
+  // gettery maksimï¿½w i minimï¿½w
   double getXMin() const;
   double getXMax() const;
   double getYMin() const;
@@ -30,6 +30,8 @@ class Data {
   // operatory
   bool operator==(const Data& other) const;
   bool operator!=(const Data& other) const;
+
+  void clear();
 };
 
 #endif /* DATA_H */

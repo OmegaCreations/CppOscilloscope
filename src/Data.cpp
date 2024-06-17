@@ -3,11 +3,12 @@
 
 // konstruktor
 Data::Data()
-    // wykorzystanie limitów do ograniczenia maksimów i minimów
+    // wykorzystanie limitï¿½w do ograniczenia maksimï¿½w i minimï¿½w
     : x_min(std::numeric_limits<double>::max()),
       x_max(std::numeric_limits<double>::min()),
       y_min(std::numeric_limits<double>::max()),
-      y_max(std::numeric_limits<double>::min()) {}
+      y_max(std::numeric_limits<double>::min()),
+      data_points{} {}
 
 
 // dodawanie nowego punktu do danych
@@ -16,7 +17,7 @@ void Data::addDataPoint(double x, double y) {
   updateMinMax(x, y);
 }
 
-// aktualizacja minimów i maksimów
+// aktualizacja minimï¿½w i maksimï¿½w
 void Data::updateMinMax(double x, double y) {
   x_min = std::min(x_min, x);
   x_max = std::max(x_max, x);
@@ -29,7 +30,7 @@ const std::vector<std::pair<double, double>>& Data::getDataPoints() const {
   return data_points;
 }
 
-// gettery minimów i maksimów
+// gettery minimï¿½w i maksimï¿½w
 double Data::getXMin() const {
   return x_min;
 }
@@ -53,4 +54,12 @@ bool Data::operator==(const Data& other) const {
 
 bool Data::operator!=(const Data& other) const {
   return !(*this == other);
+}
+
+void Data::clear() {
+  data_points.clear();
+  x_min = std::numeric_limits<double>::max();
+  x_max = std::numeric_limits<double>::min();
+  y_min = std::numeric_limits<double>::max();
+  y_max = std::numeric_limits<double>::min();
 }
