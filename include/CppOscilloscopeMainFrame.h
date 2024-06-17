@@ -35,6 +35,7 @@ class CppOscilloscopeMainFrame : public MainFrame
 	private:
 		std::shared_ptr<Config> _config;
 		Data _currentData, _previousData, _historicData;
+		wxImage _output_image;
 
 		void loadData(const std::string& filepath);
 		void updateStats();

@@ -4,11 +4,13 @@
 #include <iostream>
 #include "DataLoader.h"
 #include "Plotter.h"
+#include "wx/wfstream.h"
 
 CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
     : MainFrame(parent),
       _config{std::make_shared<Config>(OperatingModeRadioBox->GetSelection(), DrawStyleRadioBox->GetSelection(), ShowGridCheckbox->IsChecked())} {
   DrawPanel->SetBackgroundStyle(wxBG_STYLE_PAINT);
+  wxImage::AddHandler(new wxJPEGHandler);
 }
 
 void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
@@ -27,6 +29,8 @@ void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
 
   memDC.SelectObject(wxNullBitmap);
   dc.DrawBitmap(bitmap, {0, 0});
+
+  _output_image = bitmap.ConvertToImage();
 }
 
 void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {
@@ -65,7 +69,18 @@ void CppOscilloscopeMainFrame::ShowGridCheckboxOnCheckBox(wxCommandEvent& event)
 }
 
 void CppOscilloscopeMainFrame::BitmapSaveButtonOnButtonClick(wxCommandEvent& event) {
-  // TODO: Implement BitmapSaveButtonOnButtonClick
+  wxFileDialog saveImageDialog(this, _("Save the image"), "", "", "JPEG file (*.jpeg)|*.jpeg", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+  if (saveImageDialog.ShowModal() == wxID_CANCEL) {
+    return;
+  }
+
+  wxFileOutputStream output_stream(saveImageDialog.GetPath());
+  if (!output_stream.IsOk()) {
+    return;
+  }
+
+  _output_image.SaveFile(output_stream, wxBITMAP_TYPE_JPEG);
 }
 
 void CppOscilloscopeMainFrame::RefreshTimerOnTimer(wxTimerEvent& event) {
