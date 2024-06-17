@@ -1,9 +1,9 @@
 #include "CppOscilloscopeMainFrame.h"
 #include <wx/dcbuffer.h>
 #include <wx/filedlg.h>
+#include <iostream>
 #include "DataLoader.h"
 #include "Plotter.h"
-#include <iostream>
 
 CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
     : MainFrame(parent),
@@ -19,13 +19,13 @@ void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
     return;
   }
 
-  //wxBitmap bitmap{DrawPanel->GetSize()};
-  //wxMemoryDC memDC{bitmap};
+  // wxBitmap bitmap{DrawPanel->GetSize()};
+  // wxMemoryDC memDC{bitmap};
 
   Plotter plotter{_config};
   plotter.draw(dc, _currentData, _previousData, _historicData);
 
-  //dc.DrawBitmap(bitmap, {0, 0});
+  // dc.DrawBitmap(bitmap, {0, 0});
 }
 
 void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {
@@ -79,18 +79,24 @@ void CppOscilloscopeMainFrame::loadData(const std::string& filepath) {
 void CppOscilloscopeMainFrame::updateStats() {
   switch (_config->getOperatingMode()) {
     case OperatingMode::CURRENT:
-      yMinValue->SetLabel(std::to_string(_currentData.getYMin()));
-      yMaxValue->SetLabel(std::to_string(_currentData.getYMax()));
+      if (!_currentData.getDataPoints().empty()) {
+        yMinValue->SetLabel(std::to_string(_currentData.getYMin()));
+        yMaxValue->SetLabel(std::to_string(_currentData.getYMax()));
+      }
       break;
 
     case OperatingMode::CURRENT_AND_PREVIOUS:
-      yMinValue->SetLabel(std::to_string(std::min(_currentData.getYMin(), _previousData.getYMin())));
-      yMaxValue->SetLabel(std::to_string(std::max(_currentData.getYMax(), _previousData.getYMax())));
+      if (!_currentData.getDataPoints().empty() && !_previousData.getDataPoints().empty()) {
+        yMinValue->SetLabel(std::to_string(std::min(_currentData.getYMin(), _previousData.getYMin())));
+        yMaxValue->SetLabel(std::to_string(std::max(_currentData.getYMax(), _previousData.getYMax())));
+      }
       break;
 
     case OperatingMode::CONTINUOUS:
-      yMinValue->SetLabel(std::to_string(_historicData.getYMin()));
-      yMaxValue->SetLabel(std::to_string(_historicData.getYMax()));
+      if (!_historicData.getDataPoints().empty()) {
+        yMinValue->SetLabel(std::to_string(_historicData.getYMin()));
+        yMaxValue->SetLabel(std::to_string(_historicData.getYMax()));
+      }
       break;
   }
 }
