@@ -157,6 +157,4 @@ void Plotter::drawAxes(wxDC& dc, const Matrix& transformation, double x0, double
     line2d(dc, transformation, yTics[i], yTics[i + 1]);
     text2d(dc, transformation, yTics[i + 1].first + width * 0.01, yTics[i + 1].second + height * 0.02, 0.0, yTics[i].second);
   }
-
-  double dupa = xTics[1].first;
 }
