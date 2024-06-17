@@ -11,7 +11,7 @@ class Plotter {
  private:
   std::shared_ptr<Config> _config;
 
-  void line2d(wxDC& dc, const Matrix& transformation, std::pair<double, double> p1, std::pair<double, double> p2);
+  void line2d(wxDC& dc, const Matrix& transformation, std::pair<double, double> p1, std::pair<double, double> p2, int move_x1 = 0, int move_x2 = 0);
 
   public:
   Plotter(std::shared_ptr<Config> config);

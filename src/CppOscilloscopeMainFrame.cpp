@@ -3,7 +3,6 @@
 #include <wx/filedlg.h>
 #include "DataLoader.h"
 #include "Plotter.h"
-
 #include <iostream>
 
 CppOscilloscopeMainFrame::CppOscilloscopeMainFrame(wxWindow* parent)
@@ -20,13 +19,13 @@ void CppOscilloscopeMainFrame::DrawPanelOnPaint(wxPaintEvent& event) {
     return;
   }
 
-  wxBitmap bitmap{DrawPanel->GetSize()};
-  wxMemoryDC memDC{bitmap};
+  //wxBitmap bitmap{DrawPanel->GetSize()};
+  //wxMemoryDC memDC{bitmap};
 
   Plotter plotter{_config};
-  plotter.draw(memDC, _currentData, _previousData, _historicData);
+  plotter.draw(dc, _currentData, _previousData, _historicData);
 
-  dc.DrawBitmap(bitmap, {0, 0});
+  //dc.DrawBitmap(bitmap, {0, 0});
 }
 
 void CppOscilloscopeMainFrame::DrawPanelOnUpdateUI(wxUpdateUIEvent& event) {

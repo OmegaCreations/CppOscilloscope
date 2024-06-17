@@ -1,5 +1,7 @@
 #include "VecMat.h"
+#define _USE_MATH_DEFINES
 #include <cmath>
+
 
 Vector::Vector(double x, double y)
     : _data{x, y, 1.0} {}

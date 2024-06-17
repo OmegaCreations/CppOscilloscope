@@ -1,17 +1,22 @@
 #include "Data.h"
 #include <limits>
 
+// konstruktor
 Data::Data()
+    // wykorzystanie limitów do ograniczenia maksimów i minimów
     : x_min(std::numeric_limits<double>::max()),
       x_max(std::numeric_limits<double>::min()),
       y_min(std::numeric_limits<double>::max()),
       y_max(std::numeric_limits<double>::min()) {}
 
+
+// dodawanie nowego punktu do danych
 void Data::addDataPoint(double x, double y) {
   data_points.emplace_back(x, y);
   updateMinMax(x, y);
 }
 
+// aktualizacja minimów i maksimów
 void Data::updateMinMax(double x, double y) {
   x_min = std::min(x_min, x);
   x_max = std::max(x_max, x);
@@ -19,10 +24,12 @@ void Data::updateMinMax(double x, double y) {
   y_max = std::max(y_max, y);
 }
 
+// zwracanie wektora par
 const std::vector<std::pair<double, double>>& Data::getDataPoints() const {
   return data_points;
 }
 
+// gettery minimów i maksimów
 double Data::getXMin() const {
   return x_min;
 }
@@ -39,6 +46,7 @@ double Data::getYMax() const {
   return y_max;
 }
 
+// operatory
 bool Data::operator==(const Data& other) const {
   return data_points == other.data_points;
 }
