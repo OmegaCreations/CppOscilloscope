@@ -1,9 +1,0 @@
-# ninja log v5
-25	298	7402358859125575	CMakeFiles/proj18.dir/src/Data.cpp.obj	12f48b6dd02539be
-17	1098	7402358867133288	CMakeFiles/proj18.dir/src/CppOscilloscope.cpp.obj	a62b003dd6cec3a
-13	315	7402358859307217	CMakeFiles/proj18.dir/src/Config.cpp.obj	771aa34f5ccf37de
-29	515	7402358861301486	CMakeFiles/proj18.dir/src/DataLoader.cpp.obj	e8f026284663bbda
-9	1741	7402358873547576	CMakeFiles/proj18.dir/main.cpp.obj	e06c65e3ac2d78d2
-12	21	0	clean	8c45b54705a541e8
-21	1437	7402358870525385	CMakeFiles/proj18.dir/src/CppOscilloscopeMainFrame.cpp.obj	4051f5daaf91fab4
-5	94	7402359326524652	CMakeFiles/proj18.dir/src/VecMat.cpp.obj	8faba63bd8c04fc8

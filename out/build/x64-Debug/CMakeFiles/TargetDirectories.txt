@@ -1,3 +1,0 @@
-C:/Dev/CppOscilloscope/out/build/x64-Debug/CMakeFiles/proj18.dir
-C:/Dev/CppOscilloscope/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-C:/Dev/CppOscilloscope/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
