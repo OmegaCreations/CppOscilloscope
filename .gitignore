@@ -423,3 +423,6 @@ FodyWeavers.xsd
 
 ### Ignore build artifacts
 build/*
+
+#### Ignore vscode files
+.vscode
