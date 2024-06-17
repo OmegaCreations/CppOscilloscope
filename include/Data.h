@@ -17,6 +17,7 @@ class Data {
 
   // dodaje punkt
   void addDataPoint(double x, double y);
+  void addDataPoint(const std::pair<double, double>& point);
 
   // zwraca wszystkie za�adowane punkty
   const std::vector<std::pair<double, double>>& getDataPoints() const;

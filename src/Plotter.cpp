@@ -4,8 +4,8 @@ Plotter::Plotter(std::shared_ptr<Config> config)
     : _config{std::move(config)} {}
 
 void Plotter::draw(wxDC& dc, const Data& currentData, const Data& previousData, const Data& historicData) {
-    dc.SetBackground(*wxWHITE_BRUSH);
-    dc.Clear();
+  dc.SetBackground(*wxWHITE_BRUSH);
+  dc.Clear();
 
   int width, height;
   width = dc.GetSize().GetWidth();
@@ -22,7 +22,6 @@ void Plotter::draw(wxDC& dc, const Data& currentData, const Data& previousData, 
   // its the os...
   dc.SetTextForeground(wxColour(0, 0, 0));
 
-  // to jest suabe ale juz mi sie nie chce
   double x0, x1, y0, y1;
 
   switch (_config->getOperatingMode()) {
@@ -34,8 +33,8 @@ void Plotter::draw(wxDC& dc, const Data& currentData, const Data& previousData, 
       break;
 
     case OperatingMode::CURRENT_AND_PREVIOUS:
-      x0 = -previousData.getXMax();
-      x1 = currentData.getXMax();
+      x0 = std::min(currentData.getXMin(), previousData.getXMin());
+      x1 = std::max(currentData.getXMax(), previousData.getXMax());
       y0 = std::min(currentData.getYMin(), previousData.getYMin());
       y1 = std::max(currentData.getYMax(), previousData.getYMax());
       break;
@@ -68,55 +67,46 @@ void Plotter::draw(wxDC& dc, const Data& currentData, const Data& previousData, 
   // dc.SetPen(wxPen(wxColour(245, 66, 66), 2));
   // line2d(dc, transformation, {})
 
-  int move_x = 0; // zmienna która przesuwa argumenty w ty³ dla historii
-  int data_size = 3; // zmienna okreœlaj¹ca iloœæ danych wczytywanych z pliku za ka¿dym razem
+  int move_x = 0;     // zmienna ktï¿½ra przesuwa argumenty w tyï¿½ dla historii
 
-  switch (_config->getOperatingMode())
-  {
-  case OperatingMode::CURRENT_AND_PREVIOUS:
-    if (previousData.getDataPoints().empty()) {
+  switch (_config->getOperatingMode()) {
+    case OperatingMode::CURRENT_AND_PREVIOUS:
+      if (previousData.getDataPoints().empty()) {
+        break;
+      }
+
+      dc.SetPen(wxPen(wxColour(66, 135, 245), 2));
+
+      // move_x = -previousData.getXMax();
+
+      std::for_each(previousData.getDataPoints().begin(), previousData.getDataPoints().end() - 1, [&](const std::pair<double, double>& p) {
+        line2d(dc, transformation, p, *std::next(&p));  // p is just a dereferenced iterator, so we can take its addres again, and then increment it and dereference it again :)
+      });
+      // fall through, no break
+
+    case OperatingMode::CURRENT:               // Zwraca wykres tylko najnowszych danych
+      dc.SetPen(wxPen(wxColour(0, 0, 0), 2));  // kolor linii
+
+      // rysowanie linii dla kaï¿½dego punktu w currentData
+      std::for_each(currentData.getDataPoints().begin(), currentData.getDataPoints().end() - 1, [&](const std::pair<double, double>& p) {
+        line2d(dc, transformation, p, *std::next(&p));  // rysuje wykres liniami 2d
+      });
       break;
-    }
-    dc.SetPen(wxPen(wxColour(66, 135, 245), 2));
 
-    move_x = -previousData.getXMax();
+    case OperatingMode::CONTINUOUS:
+      dc.SetPen(wxPen(wxColour(0, 0, 0), 2));
 
-    std::for_each(previousData.getDataPoints().begin(), previousData.getDataPoints().end() - 1, [&](const std::pair<double, double>& p) {
-      line2d(dc, transformation, p, *std::next(&p), move_x, move_x); // p is just a dereferenced iterator, so we can take its addres again, and then increment it and dereference it again :)
-    });
-    line2d(dc, transformation, *(previousData.getDataPoints().end()-1), currentData.getDataPoints()[0], move_x, 0);
-    // fall through, no break
-
-  case OperatingMode::CURRENT: // Zwraca wykres tylko najnowszych danych
-    dc.SetPen(wxPen(wxColour(0, 0, 0), 2)); // kolor linii
-
-    // rysowanie linii dla ka¿dego punktu w currentData
-    std::for_each(currentData.getDataPoints().begin(), currentData.getDataPoints().end() - 1, [&](const std::pair<double, double>& p) {
-      line2d(dc, transformation, p, *std::next(&p)); // rysuje wykres liniami 2d
-    });
-    break;
-  
-  case OperatingMode::CONTINUOUS:
-    dc.SetPen(wxPen(wxColour(0, 0, 0), 2));
-
-    // przesuwanie:
-    // zaczynamy od rysowania od przodu
-    // np: max_x = 12 i dla niego punkty siê cofamy
-    // sprawdzamy czy poprzedni x jest mniejszy od aktualnego
-    // jeœli tak to rysujemy
-    // jeœli nie to
-
-    std::for_each(historicData.getDataPoints().begin(), historicData.getDataPoints().end() - 1, [&](const std::pair<double, double>& p) {
-      line2d(dc, transformation, p, *std::next(&p));
-    });
-    break;
+      std::for_each(historicData.getDataPoints().begin(), historicData.getDataPoints().end() - 1, [&](const std::pair<double, double>& p) {
+        line2d(dc, transformation, p, *std::next(&p));
+      });
+      break;
   }
 }
 
-// Rysuje liniê 2d miêdzy l
-void Plotter::line2d(wxDC& dc, const Matrix& transformation, std::pair<double, double> p1, std::pair<double, double> p2, int move_x1, int move_x2) {
-  Vector start{p1.first+move_x1, p1.second};
-  Vector end{p2.first+move_x2, p2.second};
+// Rysuje liniï¿½ 2d miï¿½dzy l
+void Plotter::line2d(wxDC& dc, const Matrix& transformation, std::pair<double, double> p1, std::pair<double, double> p2) {
+  Vector start{p1.first, p1.second};
+  Vector end{p2.first, p2.second};
 
   start = transformation * start;
   end = transformation * end;

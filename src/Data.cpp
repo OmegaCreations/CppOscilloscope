@@ -17,6 +17,11 @@ void Data::addDataPoint(double x, double y) {
   updateMinMax(x, y);
 }
 
+void Data::addDataPoint(const std::pair<double, double>& point) {
+  data_points.push_back(point);
+  updateMinMax(point.first, point.second);
+}
+
 // aktualizacja minim�w i maksim�w
 void Data::updateMinMax(double x, double y) {
   x_min = std::min(x_min, x);

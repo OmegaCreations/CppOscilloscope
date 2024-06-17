@@ -16,7 +16,7 @@ class Plotter {
   public:
   Plotter(std::shared_ptr<Config> config);
   void draw(wxDC& dc, const Data& currentData, const Data& previousData, const Data& historicData);
-  void drawAxes(wxDC& dc, const Data& currentData, double x0, double x1, double y0, double y1);
+  void drawAxes(wxDC& dc, const Data& currentData, double x0, double x1);
 };
 
 #endif /* PLOTTER_H */
