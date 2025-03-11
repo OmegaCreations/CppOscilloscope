@@ -6,3 +6,5 @@ Additionally, the tool supports simultaneous visualization of two waveforms: one
 
 ## Libraries Used
 - **wxWidgets** – Used for building the graphical user interface.
+
+![GFK](images/GFK.png)
