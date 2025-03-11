@@ -4,6 +4,8 @@ This project aims to create a tool for visualizing how a single parameter change
 
 Additionally, the tool supports simultaneous visualization of two waveforms: one representing real-time data and the other a previously recorded waveform.
 
+A complete documentation resides inside the `doc/` directory.
+
 ## Libraries Used
 - **wxWidgets** – Used for building the graphical user interface.
 
